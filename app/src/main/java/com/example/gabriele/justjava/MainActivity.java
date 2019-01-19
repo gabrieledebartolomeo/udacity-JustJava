@@ -2,7 +2,9 @@ package com.example.gabriele.justjava;
 
          import android.os.Bundle;
          import android.support.v7.app.AppCompatActivity;
+         import android.util.Log;
          import android.view.View;
+         import android.widget.CheckBox;
          import android.widget.TextView;
 
          import java.text.NumberFormat;
@@ -13,6 +15,7 @@ package com.example.gabriele.justjava;
 public class MainActivity extends AppCompatActivity {
 
     int quantity=0;
+    boolean isChecked=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void whippedCreamCheck(View view) {
 
+        CheckBox whippedCheckBox = (CheckBox) findViewById(R.id.whipped_cream_check_box);
+        /*if(whippedCheckBox.isChecked())
+            isChecked=true;*/
+        isChecked=whippedCheckBox.isChecked();
+
+    }
 
     /**
      * This method is called when the order button is clicked.
@@ -30,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
     public void submitOrder(View view) {
 
         //display(quantity);
-        displayPrice(quantity *5);
+
+        createOrderSummary();
+
     }
 
     /**
@@ -45,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method displays the given price on the screen.
      */
-    private void displayPrice(int number) {
+
+    /*private int displayPrice(int number) {
         TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
         priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
-    }
+    }*/
 
     public void increment(View view) {
         //TextView quantity_text_view = (TextView) findViewById(R.id.quantity_text_view);
@@ -62,6 +75,28 @@ public class MainActivity extends AppCompatActivity {
         //int quantity=0;
         quantity--;
         display(quantity);
+    }
+
+    public void createOrderSummary(){
+
+
+        TextView order_summary_text_view = (TextView) findViewById(R.id.order_summary_text_view);
+
+        if(order_summary_text_view.getText()=="")
+            order_summary_text_view.setText("ORDER SUMMARY\n");
+
+
+        TextView summary_text_view = (TextView) findViewById(R.id.summary_text_view);
+        summary_text_view.setText
+                (
+                        "Add whipped cream? "+isChecked+"\n"+
+                        "Quantity: "+quantity+"\n"+
+                        "Total: € "+quantity*5+"\n"+
+                        "Thank you!"
+                );
+
+
+
     }
 
 }
