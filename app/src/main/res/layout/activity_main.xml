@@ -44,7 +44,7 @@
             android:id="@+id/chocolate_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="chocolateCheckBox"
+            android:onClick="chocolateCheck"
             android:paddingLeft="24dp"
             android:text="Chocolate"
             android:textSize="16sp"
@@ -79,7 +79,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="0"
             android:textColor="#000000"/>
 
         <Button
@@ -112,7 +111,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="submitOrder"
+            android:onClick="createOrderSummary"
             android:text="Order"/>
 
 

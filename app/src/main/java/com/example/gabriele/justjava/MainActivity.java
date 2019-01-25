@@ -6,6 +6,7 @@ package com.example.gabriele.justjava;
          import android.view.View;
          import android.widget.CheckBox;
          import android.widget.TextView;
+         import android.widget.Toast;
 
          import java.text.NumberFormat;
 
@@ -18,10 +19,13 @@ public class MainActivity extends AppCompatActivity {
     boolean isWhippedChecked=false;
     boolean isChocolateChecked=false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        display (quantity);
 
     }
 
@@ -33,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
             isChecked=true;*/
         isWhippedChecked=whippedCheckBox.isChecked();
 
+
+
     }
 
-    public void chocolateCheckBox(View view) {
+    public void chocolateCheck(View view) {
 
         CheckBox chocolateCheckBox = (CheckBox) findViewById(R.id.chocolate_check_box);
         /*if(whippedCheckBox.isChecked())
@@ -44,17 +50,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public int calculatePrice(boolean isWhippedChecked,boolean isChocolateChecked){
+        int baseprice=5;
 
-    /**
-     * This method is called when the order button is clicked.
-     */
-    public void submitOrder(View view) {
+        if(isWhippedChecked)
+            baseprice+=1;
 
-        //display(quantity);
+        if(isChocolateChecked)
+            baseprice+=2;
 
-        createOrderSummary();
+        return quantity*baseprice;
 
     }
+
+
+
 
     /**
      * This method displays the given quantity value on the screen.
@@ -77,18 +87,50 @@ public class MainActivity extends AppCompatActivity {
     public void increment(View view) {
         //TextView quantity_text_view = (TextView) findViewById(R.id.quantity_text_view);
         //int quantity=0;
-        quantity++;
-        display(quantity);
+        if (quantity < 100)
+            quantity++;
+
+        else{// Show an error message as a toast
+            Toast.makeText(this, "You cannot have more than 100 coffees", Toast.LENGTH_SHORT).show();
+            }
+
+        display (quantity);
+        return;
     }
 
     public void decrement(View view){
         TextView quantity_text_view = (TextView) findViewById(R.id.quantity_text_view);
         //int quantity=0;
-        quantity--;
-        display(quantity);
+
+        if (quantity>0)
+            quantity--;
+
+        else{// Show an error message as a toast
+            Toast.makeText(this, "You cannot have less than 1 coffee", Toast.LENGTH_SHORT).show();
+            }
+
+        display (quantity);
+        return;
     }
 
-    public void createOrderSummary(){
+
+    public String nameCheck(){
+        TextView name_editText_view = (TextView) findViewById(R.id.name_edit_text);
+        String name=name_editText_view.getText().toString();
+
+        if (name.equals(""))
+            name="-";
+
+        return name;
+    }
+
+
+
+    /**
+     * This method is called when the order button is clicked.
+     */
+
+    public void createOrderSummary(View view){
 
 
         TextView order_summary_text_view = (TextView) findViewById(R.id.order_summary_text_view);
@@ -97,19 +139,18 @@ public class MainActivity extends AppCompatActivity {
             order_summary_text_view.setText("ORDER SUMMARY\n");
 
 
-        TextView name_editText_view = (TextView) findViewById(R.id.name_edit_text);
-        String name=name_editText_view.getText().toString();
+
 
 
         TextView summary_text_view = (TextView) findViewById(R.id.summary_text_view);
         summary_text_view.setText
                 (
-                        "Name "+name+"\n"+
+                        "Name "+nameCheck()+"\n"+
                                 "Add whipped cream? "+isWhippedChecked+
                                 "\n"+"Add chocolate? "+isChocolateChecked+"\n"
                                 +
                         "Quantity: "+quantity+"\n"+
-                        "Total: € "+quantity*5+"\n"+
+                        "Total: € "+calculatePrice(isWhippedChecked,isChocolateChecked)+"\n"+
                         "Thank you!"
                 );
 
