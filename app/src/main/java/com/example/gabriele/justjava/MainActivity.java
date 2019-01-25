@@ -15,7 +15,8 @@ package com.example.gabriele.justjava;
 public class MainActivity extends AppCompatActivity {
 
     int quantity=0;
-    boolean isChecked=false;
+    boolean isWhippedChecked=false;
+    boolean isChocolateChecked=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,19 @@ public class MainActivity extends AppCompatActivity {
         CheckBox whippedCheckBox = (CheckBox) findViewById(R.id.whipped_cream_check_box);
         /*if(whippedCheckBox.isChecked())
             isChecked=true;*/
-        isChecked=whippedCheckBox.isChecked();
+        isWhippedChecked=whippedCheckBox.isChecked();
 
     }
+
+    public void chocolateCheckBox(View view) {
+
+        CheckBox chocolateCheckBox = (CheckBox) findViewById(R.id.chocolate_check_box);
+        /*if(whippedCheckBox.isChecked())
+            isChecked=true;*/
+        isChocolateChecked=chocolateCheckBox.isChecked();
+
+    }
+
 
     /**
      * This method is called when the order button is clicked.
@@ -82,14 +93,21 @@ public class MainActivity extends AppCompatActivity {
 
         TextView order_summary_text_view = (TextView) findViewById(R.id.order_summary_text_view);
 
-        if(order_summary_text_view.getText()=="")
+        if(order_summary_text_view.getText().toString()=="")
             order_summary_text_view.setText("ORDER SUMMARY\n");
+
+
+        TextView name_editText_view = (TextView) findViewById(R.id.name_edit_text);
+        String name=name_editText_view.getText().toString();
 
 
         TextView summary_text_view = (TextView) findViewById(R.id.summary_text_view);
         summary_text_view.setText
                 (
-                        "Add whipped cream? "+isChecked+"\n"+
+                        "Name "+name+"\n"+
+                                "Add whipped cream? "+isWhippedChecked+
+                                "\n"+"Add chocolate? "+isChocolateChecked+"\n"
+                                +
                         "Quantity: "+quantity+"\n"+
                         "Total: € "+quantity*5+"\n"+
                         "Thank you!"
