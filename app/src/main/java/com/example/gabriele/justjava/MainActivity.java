@@ -1,5 +1,7 @@
 package com.example.gabriele.justjava;
 
+         import android.content.Intent;
+         import android.net.Uri;
          import android.os.Bundle;
          import android.support.v7.app.AppCompatActivity;
          import android.util.Log;
@@ -130,21 +132,41 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
 
+    public void sendEmail(View view, String message){
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); //only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Just Java order for"+nameCheck());
+        intent.putExtra(Intent.EXTRA_TEXT,message);
+        if (intent.resolveActivity(getPackageManager())!= null){
+            startActivity(intent);}
+    }
+
     public void createOrderSummary(View view){
 
 
         TextView order_summary_text_view = (TextView) findViewById(R.id.order_summary_text_view);
 
-        if(order_summary_text_view.getText().toString()=="")
-            order_summary_text_view.setText("ORDER SUMMARY\n");
+//        if(order_summary_text_view.getText().toString()=="")
+//            order_summary_text_view.setText("ORDER SUMMARY\n");
 
 
 
 
 
-        TextView summary_text_view = (TextView) findViewById(R.id.summary_text_view);
-        summary_text_view.setText
-                (
+//        TextView summary_text_view = (TextView) findViewById(R.id.summary_text_view);
+//        summary_text_view.setText
+//                (
+//                        "Name "+nameCheck()+"\n"+
+//                                "Add whipped cream? "+isWhippedChecked+
+//                                "\n"+"Add chocolate? "+isChocolateChecked+"\n"
+//                                +
+//                        "Quantity: "+quantity+"\n"+
+//                        "Total: € "+calculatePrice(isWhippedChecked,isChocolateChecked)+"\n"+
+//                        "Thank you!"
+//                );
+
+        String message= (
                         "Name "+nameCheck()+"\n"+
                                 "Add whipped cream? "+isWhippedChecked+
                                 "\n"+"Add chocolate? "+isChocolateChecked+"\n"
@@ -154,8 +176,11 @@ public class MainActivity extends AppCompatActivity {
                         "Thank you!"
                 );
 
+        sendEmail(view, message);
 
 
     }
 
+
+//
 }
